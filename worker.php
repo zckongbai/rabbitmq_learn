@@ -25,6 +25,9 @@ $exchange->setName($exchangeName);
 // $exchange->setType(AMQP_EX_TYPE_DIRECT);
 $exchange->setType(AMQP_EX_TYPE_FANOUT);
 
+// fair dispatch
+$exchange->setPrefetchCount = 1;
+
 echo 'Exchange Status: ' . $exchange->declareExchange() . "\n";
 
 $queue = new AMQPQueue($channel);
@@ -47,6 +50,6 @@ $connection->disconnect();
 function processMessage($envelope, $queue) {
     $msg = $envelope->getBody();
     var_dump("Received: " . $msg);
-    sleep(substr_count($msg, '.')); // 为每一个点号模拟1秒钟操作
+    sleep(10); // 为每一个点号模拟1秒钟操作
     $queue->ack($envelope->getDeliveryTag()); // 手动发送ACK应答
 }

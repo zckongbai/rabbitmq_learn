@@ -27,7 +27,8 @@ try {
     $exchange->setType(AMQP_EX_TYPE_FANOUT);
     $exchange->declareExchange();
 
-    echo 'Send Message: ' . $exchange->publish($message);//, $routeKey) . "\n";
+    // echo 'Send Message: ' . $exchange->publish($message);//, $routeKey) . "\n";
+    echo 'Send Message: ' . $exchange->publish($message, $routeKey, 1) . "\n";
     echo "Message Is Sent: " . $message . "\n";
 } catch (AMQPConnectionException $e) {
     var_dump($e);
